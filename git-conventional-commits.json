@@ -37,8 +37,8 @@
       "breakingChange": "BREAKING CHANGES"
     },
 
-    "commitUrl": "https://github.com/lordoftheflies/plutonium-account-panel/commit/%commit%",
-    "commitRangeUrl": "https://github.com/lordoftheflies/plutonium-account-panel/compare/%from%...%to%?diff=split",
-    "issueUrl": "https://github.com/lordoftheflies/plutonium-account-panel/issues/%issue%"
+    "commitUrl": "https://github.com/lordoftheflies/plutonium-core/commit/%commit%",
+    "commitRangeUrl": "https://github.com/lordoftheflies/plutonium-core/compare/%from%...%to%?diff=split",
+    "issueUrl": "https://github.com/lordoftheflies/plutonium-core/issues/%issue%"
   }
 }

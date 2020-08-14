@@ -2,10 +2,10 @@
 <!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
 <coverage lines-valid="9" lines-covered="9" line-rate="1" branches-valid="0" branches-covered="0" branch-rate="1" timestamp="1589142241806" complexity="0" version="0.1">
   <sources>
-    <source>/home/lordoftheflies/Documents/business/corgy/corgy-frontend</source>
+    <source>.</source>
   </sources>
   <packages>
-    <class name="CorgyFrontend.js" filename="out-tsc/src/CorgyFrontend.js" line-rate="1" branch-rate="1">
+    <class name="PlutoniumCore.js" filename="dist/src/PlutoniumCore.js" line-rate="1" branch-rate="1">
       <methods>
         <method name="(anonymous_0)" hits="2" signature="()V">
           <lines>
@@ -28,14 +28,7 @@
         <line number="83" hits="1" branch="false"/>
       </lines>
     </class>
-    <class name="corgy-frontend.js" filename="out-tsc/src/corgy-frontend.js" line-rate="1" branch-rate="1">
-      <methods>
-      </methods>
-      <lines>
-        <line number="2" hits="1" branch="false"/>
-      </lines>
-    </class>
-    <class name="open-wc-logo.js" filename="out-tsc/src/open-wc-logo.js" line-rate="1" branch-rate="1">
+    <class name="plutonium-core.js" filename="dist/src/plutonium-core.js" line-rate="1" branch-rate="1">
       <methods>
       </methods>
       <lines>

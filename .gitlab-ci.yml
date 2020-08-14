@@ -8,7 +8,6 @@ image: registry.gitlab.com/cherubits/cherubits-automation/docker-puppeteer:lates
 cache:
   paths:
     - node_modules/
-    - out-tsc/
     - dist/
 
 
@@ -45,7 +44,7 @@ unit-testing:
   coverage: '/All files[^|]*\|[^|]*\s+([\d\.]+)/'
   artifacts:
     reports:
-      cobertura: coverage/coverage.xml
+      cobertura: coverage.xml
       junit: test-results/*/test-report.xml
   only:
     - branches
@@ -81,7 +80,6 @@ release:
     - git reset --hard
     - git checkout -B "$CI_COMMIT_REF_NAME" && git pull upstream $CI_COMMIT_REF_NAME
   script:
-    - yarn run build
     - yarn run analyze:elements
     - yarn run analyze:docs
     - cp -R ./assets ./dist/assets

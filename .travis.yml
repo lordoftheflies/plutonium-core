@@ -1,0 +1,52 @@
+
+language: node_js
+sudo: false
+dist: bionic
+node_js: '12'
+addons:
+  firefox: latest
+  chrome: stable
+cache:
+  directories:
+    - node_modules
+env:
+
+
+  global:
+    - GIT_AUTHOR_NAME: lordoftheflies
+    - GIT_AUTHOR_EMAIL: laszlo.hegedus@cherubits.hu
+    - GIT_COMMITTER_NAME: lordoftheflies
+    - GIT_COMMITTER_EMAIL: laszlo.hegedus@cherubits.hu
+    - GITHUB_TOKEN: 52e74fea92612c6a0ce0b338f5eb1c52a3d4e61b
+    - NPM_TOKEN: 69b20d9f-a1da-4c2d-ad29-673f9021783a
+
+before_script:
+  - npm install
+
+script:
+  - npm run build
+  - npm run test
+
+after_script:
+  - npm ci
+
+#deploy:
+#  provider: npm
+#  email: "laszlo.hegedus@cherubits.hu"
+#  api_key: "cb19333e-0ae6-4bc1-b13c-4f869bf11515"
+
+
+jobs:
+  include:
+    # Define the release stage that runs semantic-release
+    - stage: release
+      node_js: lts/*
+      # Advanced: optionally overwrite your default `script` step to skip the tests
+      # script: skip
+      deploy:
+        provider: script
+        skip_cleanup: true
+        script:
+          - npx semantic-release
+      on:
+        branch: master

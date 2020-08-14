@@ -19,3 +19,10 @@
 /_site/
 /dist/
 /out-tsc/
+
+/storybook-static/
+/test-results
+
+/yarn-error.log
+
+/lsp/

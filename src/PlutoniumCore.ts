@@ -1,5 +1,13 @@
 import { html, css, LitElement, property } from 'lit-element';
 
+/**
+ * Core panel for Plutonium Framework.
+ *
+ * @element plutonium-core
+ *
+ * @prop {String} title - Application title.
+ *
+ */
 export class PlutoniumCore extends LitElement {
   static styles = css`
     :host {
