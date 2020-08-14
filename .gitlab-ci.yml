@@ -104,9 +104,8 @@ pages:
   stage: publish
   environment:
     name: pages
-    url: https://corgy.gitlab.io/corgy-frontend
+    url: https://lordoftheflies.gitlab.io/plutonium-core
   script:
-    - yarn run build
     - yarn run analyze:elements
     - yarn run storybook:build
     - mv ./storybook-static ./public

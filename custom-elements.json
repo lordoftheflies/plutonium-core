@@ -1,30 +1,41 @@
 {
-  "version": 2,
+  "version": "experimental",
   "tags": [
     {
       "name": "plutonium-core",
-      "description": "A component with a title and an action counter",
-      "properties": [
+      "path": "./src/PlutoniumCore.ts",
+      "description": "Core panel for Plutonium Framework.",
+      "attributes": [
+        {
+          "name": "counter",
+          "type": "number",
+          "default": "5"
+        },
         {
           "name": "title",
+          "description": "Application title.",
           "type": "String",
-          "description": "The title of your component",
-          "default": "Hey there"
+          "default": "\"Hey there\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "styles",
+          "type": "CSSResult",
+          "default": "\"css`\\n    :host {\\n      display: block;\\n      padding: 25px;\\n      color: var(--plutonium-core-text-color, #000);\\n    }\\n  `\""
         },
         {
           "name": "counter",
-          "type": "Number",
-          "description": "An action counter",
-          "default": 0
-        }
-      ],
-      "events": [],
-      "slots": [],
-      "cssProperties": [
+          "attribute": "counter",
+          "type": "number",
+          "default": "5"
+        },
         {
-          "name": "--plutonium-core-text-color",
-          "description": "Main Text Color",
-          "type": "Color"
+          "name": "title",
+          "attribute": "title",
+          "description": "Application title.",
+          "type": "String",
+          "default": "\"Hey there\""
         }
       ]
     }
