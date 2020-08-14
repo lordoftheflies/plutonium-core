@@ -14,7 +14,15 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
     'import/named': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
     'import/no-unresolved': 'off',
     'import/extensions': ['error', 'always', { ignorePackages: true }],
+  },
+  env: {
+    browser: true,
+    node: true,
+  },
+  globals: {
+    document: false,
   },
 };

@@ -1,19 +1,21 @@
-  {
-  "compilerOptions": {
+ {
+   "compilerOptions": {
     "target": "es2018",
     "module": "esnext",
     "moduleResolution": "node",
     "noEmitOnError": true,
     "lib": ["es2017", "dom"],
     "strict": true,
-    "esModuleInterop": false,
+    "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
     "importHelpers": true,
     "outDir": "dist",
     "sourceMap": true,
+    "typeRoots": [ "./types", "./node_modules/@types"],
     "inlineSources": true,
     "rootDir": "./"
   },
-  "include": ["**/*.ts"]
+  "include": ["**/*.ts"],
+  "exclude": ["node_modules", "typings"]
 }

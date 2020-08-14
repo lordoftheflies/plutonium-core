@@ -1,0 +1,121 @@
+# This file is a template, and might need editing before it works on your project.
+# Official framework image. Look for the different tagged releases at:
+# https://hub.docker.com/r/library/node/tags/
+image: registry.gitlab.com/cherubits/cherubits-automation/docker-puppeteer:latest
+
+# This folder is cached between builds
+# http://docs.gitlab.com/ce/ci/yaml/README.html#cache
+cache:
+  paths:
+    - node_modules/
+    - out-tsc/
+    - dist/
+
+
+stages:
+  - install
+  - format
+  - lint
+  - test
+  - publish
+
+install:
+  stage: install
+  script:
+    - yarn install --non-interactive
+
+#format:
+#  stage: format
+#  script:
+#    - yarn run format
+#  only:
+#    - develop
+
+#lint:
+#  stage: lint
+#  script:
+#    - npm run lint
+#  only:
+#    - master
+
+unit-testing:
+  stage: test
+  script:
+    - yarn run test
+  coverage: '/All files[^|]*\|[^|]*\s+([\d\.]+)/'
+  artifacts:
+    reports:
+      cobertura: coverage/coverage.xml
+      junit: test-results/*/test-report.xml
+  only:
+    - branches
+
+release:
+  stage: publish
+  variables:
+    GIT_STRATEGY: clone
+    GIT_UPSTREAM_URL: "https://$GITLAB_USER_LOGIN:$CI_PUSH_TOKEN@$CI_SERVER_HOST:$CI_SERVER_PORT/$CI_PROJECT_PATH.git"
+#    RELEASE_CURRENT_VERSION: "v0.0.0"
+#    RELEASE_NEW_VERSION: "v0.0.0"
+#    RELEASE_NOTES: "Draft release"
+#  #environment:
+#  #  name: pypi
+#  #  url: "https://pypi.org/project/$CI_PROJECT_NAME"
+  before_script:
+    # Add SSH key
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval $(ssh-agent -s)
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - echo "${SSH_PRIVATE_KEY}" >> ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - echo "${SSH_PUBLIC_KEY}" >> ~/.ssh/id_rsa.pub
+    - ssh-add ~/.ssh/id_rsa
+    # Setup push upstream
+    - git config --global user.name "$GITLAB_USER_LOGIN"
+    - git config --global user.email "$GITLAB_USER_EMAIL"
+    - git config --global http.sslverify "false"
+    - git remote add upstream $GIT_UPSTREAM_URL
+    - echo "Git upstream url = $GIT_UPSTREAM_URL"
+    # Cleanup local branch
+    - git reset --hard
+    - git checkout -B "$CI_COMMIT_REF_NAME" && git pull upstream $CI_COMMIT_REF_NAME
+  script:
+    - yarn run build
+    - yarn run analyze:elements
+    - yarn run analyze:docs
+    - cp -R ./assets ./dist/assets
+    - npx semantic-release
+##    - git add ./CHANGELOG.md
+##    - git commit -a -m "[skip ci] Update changelog for \#$CI_JOB_ID."
+##    - export RELEASE_CURRENT_VERSION=$(bump2version patch --dry-run --verbose | grep current_version= | awk -F "=" '/current_version/ {print $2}')
+##    - export RELEASE_NEW_VERSION=$(bump2version patch --dry-run --verbose | grep new_version= | awk -F "=" '/new_version/ {print $2}')
+##    - export RELEASE_NOTES=$(cat CHANGELOG.md)
+##    - bump2version patch
+#    - git push upstream $CI_COMMIT_REF_NAME && git push upstream --tags
+##    - python setup.py bdist_wheel
+##    - twine upload --config-file .pypirc --skip-existing --non-interactive --repository pypi --comment "[skip ci] Publish v$CI_JOB_ID to pypi." dist/*
+##    - gitlab --config-file .gitlab/.python-gitlab.cfg --output json project-release create --project-id $CI_PROJECT_ID --name "Release v$RELEASE_NEW_VERSION" --tag-name "v$RELEASE_NEW_VERSION" --description "$RELEASE_NOTES"
+  artifacts:
+    paths:
+      - dist/
+  only:
+    - master
+
+pages:
+  stage: publish
+  environment:
+    name: pages
+    url: https://corgy.gitlab.io/corgy-frontend
+  script:
+    - yarn run build
+    - yarn run analyze:elements
+    - yarn run storybook:build
+    - mv ./storybook-static ./public
+    - cp -R ./assets ./public/assets
+  artifacts:
+    paths:
+      - public
+  only:
+    - master
+
