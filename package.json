@@ -1,8 +1,24 @@
 {
-  "name": "plutonium-core",
-  "version": "0.0.1",
-  "description": "Core directives and services of the Plutonium framework",
   "author": "László Hegedűs",
+  "bin": {
+    "plutonium-cli": "cat"
+  },
+  "bugs": {
+    "url": "https://github.com/lordoftheflies/plutonium-core/issues",
+    "email": "support@plutonium.cherubits.hu"
+  },
+  "config": {
+    "environment": 'production',
+    "logLevel": 3,
+    "backendProtocol": "http",
+    "backendHost": "localhost",
+    "backendPort": 8001,
+    "backendContext": "/api",
+    "frontendProtocol": "http",
+    "frontendHost": "localhost",
+    "frontendPort": 8000,
+    "frontendContext": "/"
+  },
   "contributors": [
     {
       "email": "laszlo.hegedus@cherubits.hu",
@@ -10,45 +26,9 @@
       "url": "https://github.com/lordoftheflies/"
     }
   ],
-  "license": "Apache-2.0",
-  "keywords": [
-    "webcomponents",
-    "material",
-    "plutonium",
-    "cherubits"
+  "cpu": [
+    "x64"
   ],
-  "homepage": "https://github.com/lordoftheflies/plutonium-core/",
-  "bugs": {
-    "url": "https://github.com/lordoftheflies/plutonium-core/issues",
-    "email": "support@plutonium.cherubits.hu"
-  },
-  "bin": {
-    "plutonium-cli": "cat"
-  },
-  "directories": {
-    "doc": "./doc",
-    "lib": "./lib",
-    "test": "./test"
-  },
-  "main": "index.js",
-  "module": "index.js",
-  "scripts": {
-    "start": "concurrently --kill-others --names tsc,es-dev-server \"npm run tsc:watch\" \"es-dev-server --app-index demo/index.html --node-resolve --open --watch\"",
-    "tsc:watch": "tsc --watch",
-    "lint:eslint": "eslint --ext .ts,.html . --ignore-path .gitignore",
-    "format:eslint": "eslint --ext .ts,.html . --fix --ignore-path .gitignore",
-    "lint:prettier": "prettier \"**/*.js\" \"**/*.ts\" --check --ignore-path .gitignore",
-    "format:prettier": "prettier \"**/*.js\" \"**/*.ts\" --write --ignore-path .gitignore",
-    "lint": "npm run lint:eslint && npm run lint:prettier",
-    "format": "npm run format:eslint && npm run format:prettier",
-    "test": "tsc && karma start --coverage",
-    "test:watch": "concurrently --kill-others --names tsc,karma \"npm run tsc:watch\" \"karma start --auto-watch=true --single-run=false\"",
-    "storybook": "concurrently --kill-others --names tsc,storybook \"npm run tsc:watch\" \"start-storybook --node-resolve --watch --open\"",
-    "storybook:build": "build-storybook",
-    "analyze:elements": "wca analyze src --format json --outFile custom-elements.json",
-    "analyze:docs": "wca analyze src --format markdown --outFile README.md",
-    "start:backend": "node middleware.js"
-  },
   "dependencies": {
     "@open-wc/scoped-elements": "^1.2.1",
     "@sentry/browser": "^5.21.1",
@@ -61,6 +41,7 @@
     "lit-translate": "^1.2.1",
     "moment": "^2.27.0"
   },
+  "description": "Core directives and services of the Plutonium framework",
   "devDependencies": {
     "@koa/router": "^9.1.0",
     "@open-wc/demoing-storybook": "^2.0.0",
@@ -98,10 +79,17 @@
     "typescript": "~3.8.2",
     "web-component-analyzer": "^1.1.6"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/lordoftheflies/plutonium-core.git",
-    "directory": "./dist"
+  "directories": {
+    "doc": "./doc",
+    "lib": "./lib",
+    "test": "./test"
+  },
+  "dist": {
+    "tarball": "./dist"
+  },
+  "engines": {
+    "npm": "~6.14.7",
+    "node": ">=10.19.0"
   },
   "eslintConfig": {
     "extends": [
@@ -109,15 +97,19 @@
       "eslint-config-prettier"
     ]
   },
-  "prettier": {
-    "singleQuote": true,
-    "arrowParens": "avoid"
-  },
+  "homepage": "https://github.com/lordoftheflies/plutonium-core/",
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
     }
   },
+  "keywords": [
+    "webcomponents",
+    "material",
+    "plutonium",
+    "cherubits"
+  ],
+  "license": "Apache-2.0",
   "lint-staged": {
     "*.ts": [
       "eslint --fix",
@@ -125,34 +117,42 @@
       "git add"
     ]
   },
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org/",
-    "tag": "latest"
-  },
-  "config": {
-    "environment": 'production',
-    "logLevel": 3,
-    "backendProtocol": "http",
-    "backendHost": "localhost",
-    "backendPort": 8001,
-    "backendContext": "/api",
-    "frontendProtocol": "http",
-    "frontendHost": "localhost",
-    "frontendPort": 8000,
-    "frontendContext": "/"
-  },
-  "engines": {
-    "npm": "~6.14.7",
-    "node": ">=10.19.0"
-  },
+  "main": "index.js",
+  "module": "index.js",
+  "name": "@lordoftheflies/plutonium-core",
   "os": [
     "darwin",
     "linux"
   ],
-  "cpu": [
-    "x64"
-  ],
-  "dist": {
-    "tarball": "./dist"
-  }
+  "prettier": {
+    "singleQuote": true,
+    "arrowParens": "avoid"
+  },
+  "publishConfig": {
+    "@lordoftheflies:registry": "https://registry.npmjs.org/",
+    "tag": "latest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lordoftheflies/plutonium-core.git",
+    "directory": "./dist"
+  },
+  "scripts": {
+    "start": "concurrently --kill-others --names tsc,es-dev-server \"npm run tsc:watch\" \"es-dev-server --app-index demo/index.html --node-resolve --open --watch\"",
+    "tsc:watch": "tsc --watch",
+    "lint:eslint": "eslint --ext .ts,.html . --ignore-path .gitignore",
+    "format:eslint": "eslint --ext .ts,.html . --fix --ignore-path .gitignore",
+    "lint:prettier": "prettier \"**/*.js\" \"**/*.ts\" --check --ignore-path .gitignore",
+    "format:prettier": "prettier \"**/*.js\" \"**/*.ts\" --write --ignore-path .gitignore",
+    "lint": "npm run lint:eslint && npm run lint:prettier",
+    "format": "npm run format:eslint && npm run format:prettier",
+    "test": "tsc && karma start --coverage",
+    "test:watch": "concurrently --kill-others --names tsc,karma \"npm run tsc:watch\" \"karma start --auto-watch=true --single-run=false\"",
+    "storybook": "concurrently --kill-others --names tsc,storybook \"npm run tsc:watch\" \"start-storybook --node-resolve --watch --open\"",
+    "storybook:build": "build-storybook",
+    "analyze:elements": "wca analyze src --format json --outFile custom-elements.json",
+    "analyze:docs": "wca analyze src --format markdown --outFile README.md",
+    "start:backend": "node middleware.js"
+  },
+  "version": "0.0.1"
 }
