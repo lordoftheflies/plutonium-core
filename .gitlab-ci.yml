@@ -54,10 +54,9 @@ release:
   variables:
     GIT_STRATEGY: clone
     GIT_UPSTREAM_URL: "https://$GITLAB_USER_LOGIN:$CI_PUSH_TOKEN@$CI_SERVER_HOST:$CI_SERVER_PORT/$CI_PROJECT_PATH.git"
-#    RELEASE_CURRENT_VERSION: "v0.0.0"
-#    RELEASE_NEW_VERSION: "v0.0.0"
-#    RELEASE_NOTES: "Draft release"
-#  #environment:
+  environment:
+    name: production
+    url: https://plutonium.cherubits.hu/plutonium-core/
 #  #  name: pypi
 #  #  url: "https://pypi.org/project/$CI_PROJECT_NAME"
   before_script:
@@ -84,13 +83,13 @@ release:
     - yarn run analyze:docs
     - cp -R ./assets ./dist/assets
     - npx semantic-release
-##    - git add ./CHANGELOG.md
-##    - git commit -a -m "[skip ci] Update changelog for \#$CI_JOB_ID."
+    - git add .
+    - git commit -a -m "[skip ci] Update changelog for \#$CI_JOB_ID."
 ##    - export RELEASE_CURRENT_VERSION=$(bump2version patch --dry-run --verbose | grep current_version= | awk -F "=" '/current_version/ {print $2}')
 ##    - export RELEASE_NEW_VERSION=$(bump2version patch --dry-run --verbose | grep new_version= | awk -F "=" '/new_version/ {print $2}')
 ##    - export RELEASE_NOTES=$(cat CHANGELOG.md)
 ##    - bump2version patch
-#    - git push upstream $CI_COMMIT_REF_NAME && git push upstream --tags
+#     - git push upstream $CI_COMMIT_REF_NAME && git push upstream --tags
 ##    - python setup.py bdist_wheel
 ##    - twine upload --config-file .pypirc --skip-existing --non-interactive --repository pypi --comment "[skip ci] Publish v$CI_JOB_ID to pypi." dist/*
 ##    - gitlab --config-file .gitlab/.python-gitlab.cfg --output json project-release create --project-id $CI_PROJECT_ID --name "Release v$RELEASE_NEW_VERSION" --tag-name "v$RELEASE_NEW_VERSION" --description "$RELEASE_NOTES"
@@ -104,7 +103,7 @@ pages:
   stage: publish
   environment:
     name: pages
-    url: https://lordoftheflies.gitlab.io/plutonium-core
+    url: https://lordoftheflies.gitlab.io/plutonium-core/
   script:
     - yarn run analyze:elements
     - yarn run storybook:build
@@ -112,7 +111,7 @@ pages:
     - cp -R ./assets ./public/assets
   artifacts:
     paths:
-      - public
+      - public/
   only:
     - master
 
