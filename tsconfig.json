@@ -14,8 +14,9 @@
     "sourceMap": true,
     "typeRoots": [ "./types", "./node_modules/@types"],
     "inlineSources": true,
-    "rootDir": "./"
-  },
-  "include": ["**/*.ts"],
-  "exclude": ["node_modules", "typings"]
+    "rootDir": "./",
+    "resolveJsonModule": false
+   },
+   "include": ["**/*.ts"],
+   "exclude": ["node_modules", "typings"]
 }
