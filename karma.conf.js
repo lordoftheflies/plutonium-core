@@ -20,7 +20,7 @@ module.exports = config => {
       ],
       plugins: ['karma-junit-reporter', 'karma-coverage'],
       esm: {
-        nodeResolve: true,
+        nodeResolve: true
       },
       // you can overwrite/extend the config further
       singleRun: true,
